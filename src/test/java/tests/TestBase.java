@@ -1,7 +1,8 @@
-package drivers;
+package tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import drivers.BrowserstackMobileDriver;
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
@@ -23,7 +24,6 @@ public class TestBase {
     @BeforeEach
     public void startDriver() {
         addListener("AllureSelenide", new AllureSelenide());
-
         open();
     }
 

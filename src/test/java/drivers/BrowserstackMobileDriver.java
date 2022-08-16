@@ -16,19 +16,15 @@ public class BrowserstackMobileDriver implements WebDriverProvider {
     public WebDriver createDriver(Capabilities capabilities) {
 
         CredentialsConfig config = ConfigFactory.create(CredentialsConfig.class, System.getProperties());
-        String login = config.login();
-        String password = config.password();
-        String app = config.app();
-
         MutableCapabilities mutableCapabilities = new MutableCapabilities();
         mutableCapabilities.merge(capabilities);
 
         // Set access credentials
-        mutableCapabilities.setCapability("browserstack.user", login);
-        mutableCapabilities.setCapability("browserstack.key", password);
+        mutableCapabilities.setCapability("browserstack.user", config.login());
+        mutableCapabilities.setCapability("browserstack.key", config.password());
 
         // Set URL of the application under test
-        mutableCapabilities.setCapability("app", app);
+        mutableCapabilities.setCapability("app", config.app());
 
         // Specify device and os_version for testing
         mutableCapabilities.setCapability("device", "Google Pixel 3");
