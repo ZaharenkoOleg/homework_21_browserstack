@@ -5,19 +5,21 @@ import org.aeonbits.owner.Config;
 @Config.Sources("classpath:browserstack.properties")
 public interface CredentialsConfig extends Config {
 
-    @Key("login")
-    String login();
+    @Key("browserstackLogin")
+    String browserstackLogin();
 
-    @Key("password")
-    String password();
+    @Key("browserstackPassword")
+    String browserstackPassword();
 
-    @Key("app")
-    String app();
+    @Key("browserstackApp")
+    String browserstackApp();
 
-    @Key("deviceName")
-    String deviceName();
+    @Key("browserstackDeviceName")
+    String browserstackDeviceName();
 
-    @Key("osVersion")
-    String osVersion();
+    @Key("browserstackVersion")
+    String browserstackVersion();
+
+
 
 }

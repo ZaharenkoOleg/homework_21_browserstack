@@ -1,7 +1,7 @@
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
-import configs.EmulatorConfig;
+import configs.RealDeviceConfig;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.remote.AutomationName;
@@ -17,23 +17,24 @@ import java.net.URL;
 
 import static org.apache.commons.io.FileUtils.copyInputStreamToFile;
 
-public class LocalMobileDriver implements WebDriverProvider {
+public class RealDeviceDriver implements WebDriverProvider {
 
     @Override
     public WebDriver createDriver(Capabilities capabilities) {
 
-        EmulatorConfig config = ConfigFactory.create(EmulatorConfig.class, System.getProperties());
+       RealDeviceConfig config = ConfigFactory.create(RealDeviceConfig.class, System.getProperties());
 
         File app = getApp();
         UiAutomator2Options options = new UiAutomator2Options();
         options.merge(capabilities);
         options.setAutomationName(AutomationName.ANDROID_UIAUTOMATOR2);
-        options.setPlatformName(config.emulatorPlatformName());
-        options.setDeviceName(config.emulatorDeviceName());
-        options.setPlatformVersion(config.emulatorDeviceVersion());
+        options.setPlatformName(config.realPlatformName());
+        options.setDeviceName(config.realDeviceName());
+        options.setPlatformVersion(config.realDeviceVersion());
         options.setApp(app.getAbsolutePath());
         options.setAppPackage("org.wikipedia.alpha");
         options.setAppActivity("org.wikipedia.main.MainActivity");
+
 
         return new AndroidDriver(getAppiumServerUrl(), options);
     }
@@ -61,5 +62,4 @@ public class LocalMobileDriver implements WebDriverProvider {
         }
         return app;
     }
-
 }

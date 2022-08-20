@@ -1,41 +1,43 @@
 package drivers;
 
+
 import com.codeborne.selenide.WebDriverProvider;
-import configs.EmulatorConfig;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.options.UiAutomator2Options;
-import io.appium.java_client.remote.AutomationName;
+import configs.SelenoidMobileConfig;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 import static org.apache.commons.io.FileUtils.copyInputStreamToFile;
 
-public class LocalMobileDriver implements WebDriverProvider {
+public class SelenoidMobileDriver implements WebDriverProvider {
+
 
     @Override
     public WebDriver createDriver(Capabilities capabilities) {
 
-        EmulatorConfig config = ConfigFactory.create(EmulatorConfig.class, System.getProperties());
+        SelenoidMobileConfig driverConfig = ConfigFactory.create(SelenoidMobileConfig.class, System.getProperties());
 
-        File app = getApp();
-        UiAutomator2Options options = new UiAutomator2Options();
-        options.merge(capabilities);
-        options.setAutomationName(AutomationName.ANDROID_UIAUTOMATOR2);
-        options.setPlatformName(config.emulatorPlatformName());
-        options.setDeviceName(config.emulatorDeviceName());
-        options.setPlatformVersion(config.emulatorDeviceVersion());
-        options.setApp(app.getAbsolutePath());
-        options.setAppPackage("org.wikipedia.alpha");
-        options.setAppActivity("org.wikipedia.main.MainActivity");
+        DesiredCapabilities options = new DesiredCapabilities();
+        options.setCapability("browserName", driverConfig.selenoidDeviceName());
+        options.setCapability("browserVersion", driverConfig.selenoidDeviceVersion());
+        options.setCapability("app", getApp());
+        options.setCapability("appPackage",  "org.wikipedia.alpha");
+        options.setCapability("appActivity", "org.wikipedia.main.MainActivity" );
+        options.setCapability("selenoid:options", Map.<String, Object>of(
+                "enableVNC", true,
+                "enableVideo", true
+        ));
 
-        return new AndroidDriver(getAppiumServerUrl(), options);
+        return new RemoteWebDriver(getAppiumServerUrl(), options);
     }
 
     public static URL getAppiumServerUrl() {
@@ -61,5 +63,5 @@ public class LocalMobileDriver implements WebDriverProvider {
         }
         return app;
     }
-
 }
+

@@ -20,15 +20,15 @@ public class BrowserstackMobileDriver implements WebDriverProvider {
         mutableCapabilities.merge(capabilities);
 
         // Set access credentials
-        mutableCapabilities.setCapability("browserstack.user", config.login());
-        mutableCapabilities.setCapability("browserstack.key", config.password());
+        mutableCapabilities.setCapability("browserstack.user", config.browserstackLogin());
+        mutableCapabilities.setCapability("browserstack.key", config.browserstackPassword());
 
         // Set URL of the application under test
-        mutableCapabilities.setCapability("app", config.app());
+        mutableCapabilities.setCapability("app", config.browserstackApp());
 
         // Specify device and os_version for testing
-        mutableCapabilities.setCapability("device", config.deviceName());
-        mutableCapabilities.setCapability("os_version", config.osVersion());
+        mutableCapabilities.setCapability("device", config.browserstackDeviceName());
+        mutableCapabilities.setCapability("os_version", config.browserstackVersion());
 
         // Set other BrowserStack capabilities
         mutableCapabilities.setCapability("project", "First Java Project");
