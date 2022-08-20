@@ -2,8 +2,8 @@ package configs;
 
 import org.aeonbits.owner.Config;
 
-@Config.Sources("classpath:${host}.properties")
-public interface CredentialsConfig extends Config{
+@Config.Sources("classpath:browserstack.properties")
+public interface CredentialsConfig extends Config {
 
     @Key("login")
     String login();
@@ -20,6 +20,4 @@ public interface CredentialsConfig extends Config{
     @Key("osVersion")
     String osVersion();
 
-    @Key("platformName")
-    String platformName();
 }

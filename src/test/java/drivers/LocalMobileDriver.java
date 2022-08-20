@@ -1,7 +1,7 @@
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
-import configs.CredentialsConfig;
+import configs.EmulatorConfig;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.remote.AutomationName;
@@ -22,21 +22,22 @@ public class LocalMobileDriver implements WebDriverProvider {
     @Override
     public WebDriver createDriver(Capabilities capabilities) {
 
-        CredentialsConfig config = ConfigFactory.create(CredentialsConfig.class, System.getProperties());
+        EmulatorConfig config = ConfigFactory.create(EmulatorConfig.class, System.getProperties());
 
         File app = getApp();
         UiAutomator2Options options = new UiAutomator2Options();
         options.merge(capabilities);
         options.setAutomationName(AutomationName.ANDROID_UIAUTOMATOR2);
-        options.setPlatformName(config.platformName());
-        options.setDeviceName(config.deviceName());
-        options.setPlatformVersion(config.osVersion());
+        options.setPlatformName(config.platformNameEm());
+        options.setDeviceName(config.deviceNameEm());
+        options.setPlatformVersion(config.osVersionEm());
         options.setApp(app.getAbsolutePath());
         options.setAppPackage("org.wikipedia.alpha");
         options.setAppActivity("org.wikipedia.main.MainActivity");
 
         return new AndroidDriver(getAppiumServerUrl(), options);
     }
+
     public static URL getAppiumServerUrl() {
         try {
             return new URL("http://localhost:4723/wd/hub");
@@ -44,6 +45,7 @@ public class LocalMobileDriver implements WebDriverProvider {
             throw new RuntimeException(e);
         }
     }
+
     private File getApp() {
         String appUrl = "https://github.com/wikimedia/apps-android-wikipedia/" +
                 "releases/download/latest/app-alpha-universal-release.apk";
