@@ -22,8 +22,20 @@ public class TestBase {
 
     @BeforeAll
     public static void setup() {
-        Configuration.browser = SelenoidMobileDriver.class.getName();
+        switch (deviceHost) {
+            case "browserstack":
+                Configuration.browser = BrowserstackMobileDriver.class.getName();
+                break;
+            case "realDevice":
+                Configuration.browser = RealDeviceDriver.class.getName();
+                break;
+            case "emulator":
+                Configuration.browser = LocalMobileDriver.class.getName();
+                break;
+            default:
+                Configuration.browser = SelenoidMobileDriver.class.getName();
 
+        }
         Configuration.browserSize = null;
     }
 
@@ -42,6 +54,8 @@ public class TestBase {
 
         step("Close driver", Selenide::closeWebDriver);
 
-        Attach.addVideo(sessionId);
+        if (deviceHost.equals("browserstack")) {
+            Attach.addVideo(sessionId);
+        }
     }
 }
