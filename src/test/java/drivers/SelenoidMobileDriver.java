@@ -25,11 +25,11 @@ public class SelenoidMobileDriver implements WebDriverProvider {
     public WebDriver createDriver(Capabilities capabilities) {
 
         SelenoidMobileConfig driverConfig = ConfigFactory.create(SelenoidMobileConfig.class, System.getProperties());
-
+        File app = getApp();
         DesiredCapabilities options = new DesiredCapabilities();
         options.setCapability("browserName", driverConfig.selenoidDeviceName());
         options.setCapability("browserVersion", driverConfig.selenoidDeviceVersion());
-        options.setCapability("app", getApp());
+        options.setCapability("app", app);
         options.setCapability("appPackage",  "org.wikipedia.alpha");
         options.setCapability("appActivity", "org.wikipedia.main.MainActivity" );
         options.setCapability("selenoid:options", Map.<String, Object>of(
