@@ -16,7 +16,7 @@ import static helpers.Attach.sessionId;
 import static io.qameta.allure.Allure.step;;
 
 public class TestBase {
-    private static final String host = System.getProperty("host");
+    private static final String host = System.getProperty("browserstack");
 
     @BeforeAll
     public static void setup() {
