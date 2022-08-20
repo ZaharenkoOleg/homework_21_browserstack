@@ -16,11 +16,11 @@ import static helpers.Attach.sessionId;
 import static io.qameta.allure.Allure.step;;
 
 public class TestBase {
-    private static final String host = System.getProperty("browserstack");
+    private static final String deviceHost = System.getProperty("deviceHost");
 
     @BeforeAll
     public static void setup() {
-        if ("browserstack".equals(host)) {
+        if ("browserstack".equals(deviceHost)) {
             Configuration.browser = BrowserstackMobileDriver.class.getName();
         } else {
             Configuration.browser = LocalMobileDriver.class.getName();
@@ -43,7 +43,7 @@ public class TestBase {
 
         step("Close driver", Selenide::closeWebDriver);
 
-        if (host.equals("browserstack")) {
+        if (deviceHost.equals("browserstack")) {
             Attach.addVideo(sessionId);
         }
     }
