@@ -16,7 +16,7 @@ import static helpers.Attach.sessionId;
 import static io.qameta.allure.Allure.step;;
 
 public class TestBase {
-    private static final String deviceHost = System.getProperty("deviceHost");
+    static String deviceHost = System.getProperty("deviceHost", "emulator");
 
     @BeforeAll
     public static void setup() {
