@@ -9,7 +9,6 @@ import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 
-import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +21,9 @@ public class LocalMobileDriver implements WebDriverProvider {
 
     @Override
     public WebDriver createDriver(Capabilities capabilities) {
+
         CredentialsConfig config = ConfigFactory.create(CredentialsConfig.class, System.getProperties());
+
         File app = getApp();
         UiAutomator2Options options = new UiAutomator2Options();
         options.merge(capabilities);
